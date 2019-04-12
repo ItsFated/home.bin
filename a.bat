@@ -24,7 +24,17 @@ if "%allparam:~-1%"==" " set "allparam=%allparam:~0,-1%"&goto intercept_right
 
 :eof
 
-if not "%allparam:ds=%"=="%allparam%" (adb devices)
-if not "%allparam:root=%"=="%allparam%" (adb root)
-if not "%allparam:rm=%"=="%allparam%" (adb remount)
-if not "%allparam:rb=%"=="%allparam%" (adb reboot)
+if not "%allparam:devices=%"=="%allparam%" (adb devices)
+if not "%allparam:rr=%"=="%allparam%" (
+adb root
+echo root over
+adb remount
+)
+if not "%allparam:root=%"=="%allparam%" (
+adb root
+echo root over
+)
+if not "%allparam:remount=%"=="%allparam%" (adb remount)
+if not "%allparam:reboot=%"=="%allparam%" (adb reboot)
+if not "%allparam:push_to_priv_app=%"=="%allparam%" (adb push %allparam:push_to_priv_app=% /system/priv-app/)
+if not "%allparam:push_to_app=%"=="%allparam%" (adb push %allparam:push_to_priv_app=% /system/app/)
