@@ -34,8 +34,16 @@ if not "%allparam:root=%"=="%allparam%" (
 adb root
 echo root over
 )
+if not "%allparam:monkey=%"=="%allparam%" (
+:monkey_loop
+adb shell svc power stayon true
+adb shell monkey -p %allparam:monkey=% 10
+timeout 10
+goto monkey_loop
+)
 if not "%allparam:remount=%"=="%allparam%" (adb remount)
 if not "%allparam:reboot=%"=="%allparam%" (adb reboot)
-if not "%allparam:push_to_priv_app=%"=="%allparam%" (adb push %allparam:push_to_priv_app=% /system/priv-app/)
-if not "%allparam:push_to_app=%"=="%allparam%" (adb push %allparam:push_to_priv_app=% /system/app/)
+if not "%allparam:ptpa=%"=="%allparam%" (adb push %allparam:ptpa=% /system/priv-app/)
+if not "%allparam:pta=%"=="%allparam%" (adb push %allparam:pta=% /system/app/)
 if not "%allparam:screen=%"=="%allparam%" (adb shell screencap -p /sdcard/Download/screen.png && adb pull /sdcard/Download/screen.png %allparam:screen=%)
+if not "%allparam:vrecord=%"=="%allparam%" (adb shell screenrecord --time-limit 10 /sdcard/Download/a.mp4 && adb pull /sdcard/Download/a.mp4 %allparam:vrecord=%)
